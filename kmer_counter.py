@@ -1,4 +1,6 @@
 import sys
+import pandas as pd
+
 
 def create_dataframe(genome):
     genome_length = len(genome)
@@ -7,13 +9,12 @@ def create_dataframe(genome):
     k = 1
 
     for k in range(1, genome_length + 1):
-        # change mini_dict logic to extract kmers
         print(k)
         mini_dict = count_kmers(genome, k, genome_length)
         kmer_dict[k] = mini_dict
 
-    print("BIG DICT")
-    print(kmer_dict)
+    genome_df = pd.DataFrame.from_dict(kmer_dict, orient='index')
+    print(genome_df)
 
 
 def count_kmers(genome, k, genome_length):
@@ -40,9 +41,6 @@ def count_kmers(genome, k, genome_length):
     return temp_dict
 
 
-
-
-
 def create_graph():
     print("Create graph")
 
@@ -59,12 +57,12 @@ def main():
         print("Usage: kmer_counter.py [FILE] ")
         sys.exit()
 
-    # read in data
+    # read input data
     input_file = sys.argv[1]
     with open(input_file, 'r') as file:
         genome = file.read().replace('\n', '')
 
-    print(genome)
+    # print(genome)
 
     # output results
     create_dataframe(genome)
